@@ -1,478 +1,259 @@
-<!doctype html>
-
-
-
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>SecretWiki</title>
+  <subtitle>A place to share the thoughts</subtitle>
+  <link href="/atom.xml" rel="self"/>
   
-
-
-<html class="theme-next mist use-motion" lang="zh-Hans">
-<head>
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-
-
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  <link href="https://secretwiki.org/"/>
+  <updated>2017-06-17T09:33:25.927Z</updated>
+  <id>https://secretwiki.org/</id>
   
+  <author>
+    <name>Auooo</name>
+    
+  </author>
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
-
-
-
-
+  <generator uri="http://hexo.io/">Hexo</generator>
   
-  
-  
-  
-
-  
+  <entry>
+    <title>Hexo 折腾笔记</title>
+    <link href="https://secretwiki.org/2017/06/15/Notes-on-Hexo/"/>
+    <id>https://secretwiki.org/2017/06/15/Notes-on-Hexo/</id>
+    <published>2017-06-15T02:25:19.000Z</published>
+    <updated>2017-06-17T09:33:25.927Z</updated>
+    
+    <content type="html"><![CDATA[<p>因为工作生活学习等种种方面的问题，差不多快两年没有折腾博客了，<a href="http://auooo.com" target="_blank" rel="external">之前的 wordpress</a> 上放了几篇随手的笔记，但是后来由于种种原因，没有精力进行维护和更新，但是也舍不得关停，每个月续续费而已。在这段时间里面也接触了 markdown 和 hexo，轻量级的页面，轻量级的部署，给我留下了不少印象，于是选用了 hexo 从头开始。花了一个晚上给部署了起来，这里做一简单记录。</p>
+<a id="more"></a>
+<h1 id="快速上手和常见问题"><a href="#快速上手和常见问题" class="headerlink" title="快速上手和常见问题"></a>快速上手和常见问题</h1><h2 id="下载安装及基本使用"><a href="#下载安装及基本使用" class="headerlink" title="下载安装及基本使用"></a>下载安装及基本使用</h2><p>这里参考<a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="external">官方文档</a>即可。</p>
+<h2 id="切换主题"><a href="#切换主题" class="headerlink" title="切换主题"></a>切换主题</h2><p>选择使用 <a href="http://theme-next.iissnan.com" target="_blank" rel="external">Next 主题</a>替换默认的 landscape 主题，具体可以参考 <a href="http://theme-next.iissnan.com/getting-started.html" target="_blank" rel="external">Next 官方文档</a>。后续的操作均在 Next 主题中进行操作。</p>
+<h2 id="部署至-github-并绑定自己的域名"><a href="#部署至-github-并绑定自己的域名" class="headerlink" title="部署至 github 并绑定自己的域名"></a>部署至 github 并绑定自己的域名</h2><p>部署可以参考<a href="http://www.jianshu.com/p/39562a0d8eb6" target="_blank" rel="external">这篇文档</a>进行部署，没什么难度。唯一要注意的是对于多账号多博客而言，需要配置一下私钥的使用范围。具体可以参考<a href="https://www.zybuluo.com/yangfch3/note/172120" target="_blank" rel="external">多个 SSH KEY 的管理</a></p>
+<p>第一个账号的 ssh key 增加方式直接参考 <a href="https://help.github.com/articles/connecting-to-github-with-ssh/" target="_blank" rel="external">github 官方文档</a>进行操作即可:</p>
+<ol>
+<li><p>生成公私钥对 <code>ssh-keygen -t rsa -b 4096 -C &quot;your_email@example.com&quot;</code>,然后添加私钥至 ssh 管理器 <code>ssh-add ~/.ssh/id_rsa</code>，然后增加至 github 上即可 <code>sudo apt-get install xclip</code>，<code>xclip -sel clip &lt; ~/.ssh/id_rsa.pub</code>。在博客目录下配置时也一切正常，user.name 和 user.email 都设置为局部参数。</p>
+</li>
+<li><p>第二个账号在生成公私钥对时需额外指定名称，否则会出现名称重复的问题。</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ssh-keygen -t rsa -b 4096 -C <span class="string">"your_email@example.com"</span> <span class="_">-f</span> ~/.ssh/second</div><div class="line">ssh-add ~/.ssh/second                   <span class="comment"># 新增私钥</span></div><div class="line">ssh-add <span class="_">-l</span>                              <span class="comment"># 确认是否添加成功，此时应有两个私钥</span></div><div class="line">xclip -sel clip &lt; ~/.ssh/second_rsa.pub <span class="comment"># 复制公钥，打开 github 设置并输入复制的公钥</span></div></pre></td></tr></table></figure>
+<p>然后在 ~/.ssh/ 目录下新建 config 文件，用于配置各个公私钥对应的主机</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Default github user(first@mail.com)  默认配置，一般可以省略</span></div><div class="line">Host github.com</div><div class="line">Hostname github.com</div><div class="line">User git</div><div class="line">Identityfile ~/.ssh/github</div><div class="line"><span class="comment"># second user(second@mail.com)  给一个新的Host称呼</span></div><div class="line">Host second.github.com  // 主机名字，不能重名</div><div class="line">HostName github.com   // 主机所在域名或IP</div><div class="line">User git  // 用户名称</div><div class="line">IdentityFile C:/Users/username/.ssh/id_rsa_second  // 私钥路径</div></pre></td></tr></table></figure>
+<p>配置完成后测试连接情况 <code>ssh -T git@second.github.com</code>，若能正常连接，则在使用第二个账号时使用方式类似 <code>git clone git@second.github.com:username/repo.git</code>，亦即将本应当为 github.com 的部分设置为与我们的 config 文件中的 Host 一致的 second.github.com。</p>
+</li>
+</ol>
+<p>另外一个问题，由于需要绑定自定义域名，需要<a href="https://help.github.com/articles/custom-domain-redirects-for-github-pages-sites/" target="_blank" rel="external">明确转发规则</a>。在正确设置了绑定的自定义域名，并在域名管理器中修改 DNS 解析后，即可正常访问。但是，会发现每次使用 <code>hexo d</code> 命令进行部署后，都需要在 github repo 的 setting 中重新设置一次自定义域名绑定，这个可以通过在 source 目录下新增 CNAME 文件，在其中写上需要的自定义域名如 abc.com，以后重新部署时就不会有这个问题了。</p>
+<p>最后，由于 github 不支持自定义域名的 https 协议，可以使用 cloudflare 进行加速并启用对 https 的支持。这个也有很多教程，注册 cloudflare 后，添加站点即可完成。在过程中需要按照 cloudflare 的指示，在域名服务商处修改默认的 dns 服务器。</p>
+<h2 id="增加-UV、PV-统计功能"><a href="#增加-UV、PV-统计功能" class="headerlink" title="增加 UV、PV 统计功能"></a>增加 UV、PV 统计功能</h2><p>使用的 Next 主题早已帮我们提供了内置的选项，在 themes/next/_config.yml 文件中进行配置即可。配置 enable 使用<a href="http://theme-next.iissnan.com/third-party-services.html#analytics-busuanzi" target="_blank" rel="external">不蒜子</a>统计站点的 UV 值，注册 <a href="https://leancloud.cn/" target="_blank" rel="external">leancloud</a> 账号获取 app_id 和 app_key 来统计页面的 PV 值。注意这里由于 leancloud 的 app_id 和 app_key 都会出现在前端，因此需要配置好对应 leancloud 应用的安全权限，具体可以参考<a href="https://lfwen.site/2016/05/31/add-count-for-hexo-next/#设置安全域名" target="_blank" rel="external">此处</a>。</p>
+<h2 id="增加评论功能"><a href="#增加评论功能" class="headerlink" title="增加评论功能"></a>增加评论功能</h2><p>虽然之前不用 hexo，但是多说关闭事件也略有耳闻，为了保证可靠性，决定使用基于 github issues 的 <a href="https://github.com/imsun/gitment" target="_blank" rel="external">gitcoment</a> 来提供评论服务。具体参考了<a href="https://meesong.github.io/StaticBlog/2017/NexT+Gitment/" target="_blank" rel="external">为 hexo NexT 添加 Gitment 评论插件</a>，摘录如下：</p>
+<ol>
+<li><p>配置样式文件</p>
+<p>在 next/source/css/_common/components 目录中新建一个 gitment.styl 的 css 样式文件, 复制以下代码</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line">.gitment_title:hover &#123;</div><div class="line">    color: <span class="comment">#fff;</span></div><div class="line">    background: <span class="comment">#0a9caf;</span></div><div class="line">    background-image: initial;</div><div class="line">    background-position-x: initial;</div><div class="line">    background-position-y: initial;</div><div class="line">    background-size: initial;</div><div class="line">    background-repeat-x: initial;</div><div class="line">    background-repeat-y: initial;</div><div class="line">    background-attachment: initial;</div><div class="line">    background-origin: initial;</div><div class="line">    background-clip: initial;</div><div class="line">    background-color: rgb(10, 156, 175);</div><div class="line">&#125;</div><div class="line">.gitment_title &#123;</div><div class="line">    border: 1px solid <span class="comment">#0a9caf;</span></div><div class="line">    border-top-color: rgb(10, 156, 175);</div><div class="line">    border-top-style: solid;</div><div class="line">    border-top-width: 1px;</div><div class="line">    border-right-color: rgb(10, 156, 175);</div><div class="line">    border-right-style: solid;</div><div class="line">    border-right-width: 1px;</div><div class="line">    border-bottom-color: rgb(10, 156, 175);</div><div class="line">    border-bottom-style: solid;</div><div class="line">    border-bottom-width: 1px;</div><div class="line">    border-left-color: rgb(10, 156, 175);</div><div class="line">    border-left-style: solid;</div><div class="line">    border-left-width: 1px;</div><div class="line">    border-image-source: initial;</div><div class="line">    border-image-slice: initial;</div><div class="line">    border-image-width: initial;</div><div class="line">    border-image-outset: initial;</div><div class="line">    border-image-repeat: initial;</div><div class="line">    border-radius: 4px;</div><div class="line">    border-top-left-radius: 4px;</div><div class="line">    border-top-right-radius: 4px;</div><div class="line">    border-bottom-right-radius: 4px;</div><div class="line">    border-bottom-left-radius: 4px;</div><div class="line">&#125;</div><div class="line">.gitment_title &#123;</div><div class="line">    display: inline-block;</div><div class="line">    padding: 0 15px;</div><div class="line">    padding-top: 0px;</div><div class="line">    padding-right: 15px;</div><div class="line">    padding-bottom: 0px;</div><div class="line">    padding-left: 15px;</div><div class="line">    color: <span class="comment">#0a9caf;</span></div><div class="line">    cursor: pointer;</div><div class="line">    font-size: 14px;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>添加 gitment 插件。</p>
+<p>打开 /next/layout/_partials/comments.swig 文件, 在最后一个 elseif 代码块下面添加 Gitment 的内容。</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">... // 上面内容省略了..</div><div class="line">&#123;% elseif theme.changyan.appid and theme.changyan.appkey %&#125;</div><div class="line">  &lt;div id=<span class="string">"SOHUCS"</span>&gt;&lt;/div&gt;</div><div class="line">&#123;% elseif theme.gitment.enable %&#125;</div><div class="line">  &lt;div onclick=<span class="string">"showGitment()"</span> id=<span class="string">"gitment_title"</span> class=<span class="string">"gitment_title"</span>&gt;显示 Gitment 评论&lt;/div&gt;</div><div class="line">  &lt;div id=<span class="string">"container"</span> style=<span class="string">"display:none"</span>&gt;&lt;/div&gt;</div><div class="line">  &lt;link rel=<span class="string">"stylesheet"</span> href=<span class="string">"https://imsun.github.io/gitment/style/default.css"</span>&gt;</div><div class="line">  &lt;script src=<span class="string">"https://imsun.github.io/gitment/dist/gitment.browser.js"</span>&gt;&lt;/script&gt;</div><div class="line">  &lt;script&gt;</div><div class="line">  const myTheme = &#123;</div><div class="line">    render(state, instance) &#123;</div><div class="line">      const container = document.createElement(<span class="string">'div'</span>);</div><div class="line">      container.lang = <span class="string">"en-US"</span>;</div><div class="line">      container.className = <span class="string">'gitment-container gitment-root-container'</span>;</div><div class="line">      container.appendChild(instance.renderHeader(state, instance));</div><div class="line">      container.appendChild(instance.renderEditor(state, instance));</div><div class="line">      container.appendChild(instance.renderComments(state, instance));</div><div class="line">      container.appendChild(instance.renderFooter(state, instance));</div><div class="line">      <span class="built_in">return</span> container;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">function</span> <span class="function"><span class="title">showGitment</span></span>() &#123;</div><div class="line">    $(<span class="string">"#gitment_title"</span>).attr(<span class="string">"style"</span>, <span class="string">"display:none"</span>);</div><div class="line">    $(<span class="string">"#container"</span>).attr(<span class="string">"style"</span>, <span class="string">""</span>).addClass(<span class="string">"gitment_container"</span>);</div><div class="line">    var gitment = new Gitment(&#123;</div><div class="line">      id: window.location.pathname,</div><div class="line">      theme: myTheme,</div><div class="line">      owner: <span class="string">'&#123;&#123; theme.gitment.owner &#125;&#125;'</span>,</div><div class="line">      repo: <span class="string">'&#123;&#123; theme.gitment.repo &#125;&#125;'</span>,</div><div class="line">      oauth: &#123;</div><div class="line">        client_id: <span class="string">'&#123;&#123; theme.gitment.client_id &#125;&#125;'</span>,</div><div class="line">        client_secret: <span class="string">'&#123;&#123; theme.gitment.client_secret &#125;&#125;'</span></div><div class="line">      &#125;</div><div class="line">    &#125;);</div><div class="line">    gitment.render(<span class="string">'container'</span>);</div><div class="line">  &#125;</div><div class="line">  &lt;/script&gt;</div><div class="line">&#123;% endif %&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>修改主题配置文件 _config.yml，在评论区添加下列代码，并根据 <a href="https://imsun.net/posts/gitment-introduction/" target="_blank" rel="external">gitment 文档</a>来添加相应的值。</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Gitment comments</span></div><div class="line">gitment:</div><div class="line">  <span class="built_in">enable</span>: <span class="literal">true</span></div><div class="line">  owner: xxxx</div><div class="line">  repo: xxxx</div><div class="line">  client_id: xxxx</div><div class="line">  client_secret: xxxx</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="更新后本地生效但远端未生效"><a href="#更新后本地生效但远端未生效" class="headerlink" title="更新后本地生效但远端未生效"></a>更新后本地生效但远端未生效</h2><p>尝试使用 <code>hexo clean</code> 然后再 <code>hexo d -g</code> 进行部署，浏览器使用 ctrl+F5 强制刷新缓存，再测试应该就正常了。</p>
+<h2 id="文章加密"><a href="#文章加密" class="headerlink" title="文章加密"></a>文章加密</h2><p>可以使用 <a href="https://github.com/MikeCoder/hexo-blog-encrypt" target="_blank" rel="external">hexo-blog-encrypt</a> 对文章进行加密。</p>
+<h1 id="细节配置"><a href="#细节配置" class="headerlink" title="细节配置"></a>细节配置</h1><p>基本功能都正常后，剩下的就是敲敲打打对博客进行完善了，这时候很有必要把博客的整个体系，以及其配置文件拿出来一个个分析一下，毕竟在过程中已经发现像 next 之类的主题有着强大的第三方插件功能了。下面一个个来分析。</p>
+<p>先看站点配置。</p>
+<h2 id="站点图标-favicon"><a href="#站点图标-favicon" class="headerlink" title="站点图标 favicon"></a>站点图标 favicon</h2><p>支持 <code>16×16,32×32,48×48,64×64</code> 的 ico 文件，将 favicon.ico 放至站点的 sources 文件夹下。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;因为工作生活学习等种种方面的问题，差不多快两年没有折腾博客了，&lt;a href=&quot;http://auooo.com&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;之前的 wordpress&lt;/a&gt; 上放了几篇随手的笔记，但是后来由于种种原因，没有精力进行维护和更新，但是也舍不得关停，每个月续续费而已。在这段时间里面也接触了 markdown 和 hexo，轻量级的页面，轻量级的部署，给我留下了不少印象，于是选用了 hexo 从头开始。花了一个晚上给部署了起来，这里做一简单记录。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="工具和环境" scheme="https://secretwiki.org/categories/%E5%B7%A5%E5%85%B7%E5%92%8C%E7%8E%AF%E5%A2%83/"/>
+    
+      <category term="博客" scheme="https://secretwiki.org/categories/%E5%B7%A5%E5%85%B7%E5%92%8C%E7%8E%AF%E5%A2%83/%E5%8D%9A%E5%AE%A2/"/>
+    
+      <category term="Hexo" scheme="https://secretwiki.org/categories/%E5%B7%A5%E5%85%B7%E5%92%8C%E7%8E%AF%E5%A2%83/%E5%8D%9A%E5%AE%A2/Hexo/"/>
     
     
+      <category term="hexo" scheme="https://secretwiki.org/tags/hexo/"/>
+    
+  </entry>
   
-
-  
-
-  
-
-  
-
-  
-
-  
+  <entry>
+    <title>Notes on Computer Forensics</title>
+    <link href="https://secretwiki.org/2017/06/11/Notes-on-Computer-Forensics/"/>
+    <id>https://secretwiki.org/2017/06/11/Notes-on-Computer-Forensics/</id>
+    <published>2017-06-11T14:07:50.000Z</published>
+    <updated>2017-06-17T09:23:57.615Z</updated>
+    
+    <content type="html"><![CDATA[<p>这是 edx.org 上 RIT 推出的网络安全系列课程中 <a href="https://courses.edx.org/courses/course-v1:RITx+CYBER502x+2T2017/" target="_blank" rel="external">CYBER502x Computer Forensics</a> 的课程笔记。</p>
+<a id="more"></a>
+<h1 id="Unit-1-Computer-Forensics-Fundamentals"><a href="#Unit-1-Computer-Forensics-Fundamentals" class="headerlink" title="Unit 1: Computer Forensics Fundamentals"></a>Unit 1: Computer Forensics Fundamentals</h1><p>Working with Evidence:</p>
+<ul>
+<li>Acquire the evidence</li>
+<li>Anthenticate the evidence</li>
+<li>Analyze the evidence</li>
+<li>Present the evidence</li>
+</ul>
+<h2 id="Acquire-volatile-data"><a href="#Acquire-volatile-data" class="headerlink" title="Acquire volatile data"></a>Acquire volatile data</h2><h3 id="Network-Interface"><a href="#Network-Interface" class="headerlink" title="Network Interface"></a>Network Interface</h3><ul>
+<li>Windows:<br>ipconfig /all &gt; myWindowsNetworkSettings.txt</li>
+<li>Linux<br>ifconfig -a &gt; myUnixNetworkSettings</li>
+</ul>
+<h2 id="Bit-stream-coppy"><a href="#Bit-stream-coppy" class="headerlink" title="Bit stream coppy"></a>Bit stream coppy</h2><ul>
+<li><p>CP copy, TA, cpio, dump restore only copy file content, stopping at the end of file marker.</p>
+</li>
+<li><p>The bit stream copy will copy every bit on the drive, including deleted data. Both dd and the FTK imagers are well-known forensic imaging tools.</p>
+</li>
+</ul>
+<h3 id="FTK"><a href="#FTK" class="headerlink" title="FTK"></a>FTK</h3><p>本例中，使用 FTK Imager 来实现对 USB 内容的镜像拷贝（bit stream copy）.</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这是 edx.org 上 RIT 推出的网络安全系列课程中 &lt;a href=&quot;https://courses.edx.org/courses/course-v1:RITx+CYBER502x+2T2017/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;CYBER502x Computer Forensics&lt;/a&gt; 的课程笔记。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="学习笔记" scheme="https://secretwiki.org/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="计算机和互联网" scheme="https://secretwiki.org/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%92%8C%E4%BA%92%E8%81%94%E7%BD%91/"/>
+    
+      <category term="网络安全" scheme="https://secretwiki.org/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%92%8C%E4%BA%92%E8%81%94%E7%BD%91/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
+    
+      <category term="计算机取证" scheme="https://secretwiki.org/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%92%8C%E4%BA%92%E8%81%94%E7%BD%91/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8F%96%E8%AF%81/"/>
     
     
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="Kali Linux," />
-
-
-
-
-
-  <link rel="alternate" href="/atom.xml" title="SecretWiki" type="application/atom+xml" />
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
-
-
-
-
-
-
-<meta name="description" content="记录自己在 Kali Linux 安装过程中遇到的问题和解决方案。">
-<meta name="keywords" content="Kali Linux">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Kali Linux 安装笔记">
-<meta property="og:url" content="https://secretwiki.org/2017/05/30/kali-install/index.html">
-<meta property="og:site_name" content="SecretWiki">
-<meta property="og:description" content="记录自己在 Kali Linux 安装过程中遇到的问题和解决方案。">
-<meta property="og:updated_time" content="2017-06-17T09:22:49.983Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Kali Linux 安装笔记">
-<meta name="twitter:description" content="记录自己在 Kali Linux 安装过程中遇到的问题和解决方案。">
-
-
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Mist',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":true},
-    fancybox: true,
-    motion: true,
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-
-  <link rel="canonical" href="https://secretwiki.org/2017/05/30/kali-install/"/>
-
-
-
-
-
-  <title>Kali Linux 安装笔记 | SecretWiki</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
+      <category term="Computer Forensics" scheme="https://secretwiki.org/tags/Computer-Forensics/"/>
     
+  </entry>
   
-
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
+  <entry>
+    <title>Reading Notes: Web Penetration Testing with Kali Linux, Second Edition</title>
+    <link href="https://secretwiki.org/2017/06/08/Reading-Notes-Web-Penetration-Testing-with-Kali-Linux-Second-Edition/"/>
+    <id>https://secretwiki.org/2017/06/08/Reading-Notes-Web-Penetration-Testing-with-Kali-Linux-Second-Edition/</id>
+    <published>2017-06-08T10:03:31.000Z</published>
+    <updated>2017-06-17T09:23:04.087Z</updated>
     
-
-    <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">SecretWiki</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-      
-        <p class="site-subtitle">A place to share the thoughts</p>
-      
-  </div>
-
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
-            
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
-            
-            分类
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            标签
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-guestbook">
-          <a href="/guestbook" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-comments"></i> <br />
-            
-            访客留言
-          </a>
-        </li>
-      
-
-      
-        <li class="menu-item menu-item-search">
-          
-            <a href="javascript:;" class="popup-trigger">
-          
-            
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
-            
-            搜索
-          </a>
-        </li>
-      
-    </ul>
-  
-
-  
-    <div class="site-search">
-      
-  <div class="popup search-popup local-search-popup">
-  <div class="local-search-header clearfix">
-    <span class="search-icon">
-      <i class="fa fa-search"></i>
-    </span>
-    <span class="popup-btn-close">
-      <i class="fa fa-times-circle"></i>
-    </span>
-    <div class="local-search-input-wrapper">
-      <input autocomplete="off"
-             placeholder="搜索..." spellcheck="false"
-             type="text" id="local-search-input">
-    </div>
-  </div>
-  <div id="local-search-result"></div>
-</div>
-
-
-
-    </div>
-  
-</nav>
-
-
-
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
+    <content type="html"><![CDATA[<p>I start to read the book <em>Web Penetration Testing with Kali Linux, Sencond Edition</em> today, and make some notes on it.</p>
+<a id="more"></a>
+<h1 id="Chapter-1-Introduction-to-Penetration-Testing-and-Web-Applications"><a href="#Chapter-1-Introduction-to-Penetration-Testing-and-Web-Applications" class="headerlink" title="Chapter 1: Introduction to Penetration Testing and Web Applications"></a>Chapter 1: Introduction to Penetration Testing and Web Applications</h1><h2 id="Different-testing-methodologies"><a href="#Different-testing-methodologies" class="headerlink" title="Different testing methodologies"></a>Different testing methodologies</h2><ul>
+<li>Ethical hacking</li>
+<li>Penestration testing</li>
+<li>Vulnerability assessment</li>
+<li>Security audits</li>
+</ul>
+<h2 id="RoE-Role-of-engagement"><a href="#RoE-Role-of-engagement" class="headerlink" title="RoE (Role of engagement)"></a>RoE (Role of engagement)</h2><ul>
+<li>Black box testing or Gray box testing</li>
+<li>Client contact details</li>
+<li>Client IT Team notifications</li>
+<li>Sensitive data handling</li>
+<li>Status meeting</li>
+</ul>
+<h2 id="The-Limitations-of-Penetration-testing"><a href="#The-Limitations-of-Penetration-testing" class="headerlink" title="The Limitations of Penetration testing"></a>The Limitations of Penetration testing</h2><ul>
+<li>Limitation of skills</li>
+<li>Limitation of time</li>
+<li>Limitation of custom exploits</li>
+<li>Avoding DoS Attack</li>
+<li>Limitation of access</li>
+<li>Limitations of tools used</li>
+</ul>
+<h2 id="The-need-for-testing-web-applications"><a href="#The-need-for-testing-web-applications" class="headerlink" title="The need for testing web applications"></a>The need for testing web applications</h2><ul>
+<li>Protecting customer data</li>
+<li>Compliance with law and regulation</li>
+<li>Loss of reputation</li>
+<li>Revenue loss</li>
+<li>Protection against business disrupt</li>
+</ul>
+<h2 id="Social-Engineering-attacks"><a href="#Social-Engineering-attacks" class="headerlink" title="Social Engineering attacks"></a>Social Engineering attacks</h2><ul>
+<li>E-mail Spoofing</li>
+<li>Telephone attacks</li>
+<li>Dumpster diving</li>
+<li>Malicious USB drives</li>
+</ul>
+<h2 id="A-web-application-overview-for-penetration-testers"><a href="#A-web-application-overview-for-penetration-testers" class="headerlink" title="A web application overview for penetration testers"></a>A web application overview for penetration testers</h2><ul>
+<li>HTTP protocal</li>
+<li>Headers in HTTP</li>
+<li>Session tracking using cookies</li>
+<li>HTML</li>
+<li>Architecture of web applications</li>
+</ul>
+<h3 id="Request-and-Response-header"><a href="#Request-and-Response-header" class="headerlink" title="Request and Response header"></a>Request and Response header</h3><h4 id="Important-fields-in-request-header"><a href="#Important-fields-in-request-header" class="headerlink" title="Important fields in request header"></a>Important fields in request header</h4><ul>
+<li>Host</li>
+<li>User-Agent</li>
+<li>Cookie</li>
+<li>Referer</li>
+<li>Accept-Encoding</li>
+</ul>
+<h4 id="Important-fields-in-response-header"><a href="#Important-fields-in-response-header" class="headerlink" title="Important fields in response header"></a>Important fields in response header</h4><ul>
+<li>Status Code: A full list of HTTP status code can be found in<br>   <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Response_codes" target="_blank" rel="external">https://developer.mozilla.org/en-US/docs/Web/HTTP/Response_codes</a></li>
+<li>Set Cookie</li>
+<li>Server: display useful information about the web server hosting the website</li>
+<li>Content-Length</li>
+</ul>
+<p>The exhaustive list of all the header fields and their usage can be found at the<br><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html" target="_blank" rel="external">http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html</a></p>
+<h3 id="Important-HTTP-method-for-penetration-testing"><a href="#Important-HTTP-method-for-penetration-testing" class="headerlink" title="Important HTTP method for penetration testing"></a>Important HTTP method for penetration testing</h3><ul>
+<li>GET</li>
+<li>POST</li>
+<li>HEAD: Server will only respond with the HTTP header without sending any payload. Can be used to quickly identify the type of server.</li>
+<li>TRACE: Server bounces back the TRACE response with the original request message in the body of the response. It can be used to check what request the server received. Also, it can be used to identify any alterations to the request by intermediary devices such as proxy servers and firewalls. IIS server has a TRACK method, same as TRACE method. Related attack: cross-site tracking(XST), which can steal user’s cookies.</li>
+<li>PUT</li>
+<li>DELETE</li>
+<li>OPTIONS: Query the server for the method that it supports.</li>
+</ul>
+<h3 id="Session-tracking-using-cookies"><a href="#Session-tracking-using-cookies" class="headerlink" title="Session tracking using cookies"></a>Session tracking using cookies</h3><p>Cookies can be divided into two main categories, <strong>persistent</strong> and <strong>non-persistent</strong> cokies</p>
+<p>If you are using Windows 7, you can find persistent cookies in the following path:</p>
+<ul>
+<li>Internet Explorer: C:\Users\username\AppData\Roaming\Microsoft\Windows\Cookies. The cookies are stored in text files.</li>
+<li>Google Chrome: C:\Users\Juned\AppData\Local\Google\Chrome\User Data\Default\cookies. The cookies are stored in a sigle SQLite3 database. Besides, we can also view cookies in the browser, by simply type in <code>chrome://settings/cookies</code>.</li>
+</ul>
+<h4 id="Cookie-Parameters"><a href="#Cookie-Parameters" class="headerlink" title="Cookie Parameters"></a>Cookie Parameters</h4><ul>
+<li>Domain: specifies the domain to which the cookie would be sent.</li>
+<li>Path: use with the Domain, specify cookie’s scope.</li>
+<li>HttpOnly: if this parameter is set, javascript could not access the cookie.</li>
+<li>Secure: if this parameter is set, the cookie is only sent over SSL.</li>
+<li>Expires: the cookie will be stored until the time specified in this parameter.</li>
+</ul>
+<h3 id="Multi-tier-web-application"><a href="#Multi-tier-web-application" class="headerlink" title="Multi-tier web application"></a>Multi-tier web application</h3><ul>
+<li>Presentation layer. Apache, Nginx, Microsoft IIS are all deployed in this layer.</li>
+<li>Application layer. PHP and ASP are programming languages that work at the application layer.</li>
+<li>Data access layer.</li>
+</ul>
+<h1 id="Chapter-2-Setting-up-Your-Lab-with-Kali-Linux"><a href="#Chapter-2-Setting-up-Your-Lab-with-Kali-Linux" class="headerlink" title="Chapter 2: Setting up Your Lab with Kali Linux"></a>Chapter 2: Setting up Your Lab with Kali Linux</h1><h2 id="Important-tools-in-Kali-Linux"><a href="#Important-tools-in-Kali-Linux" class="headerlink" title="Important tools in Kali Linux"></a>Important tools in Kali Linux</h2><p>We focused on <code>03 - Web Application Analysis</code></p>
+<h3 id="Web-Application-Proxies"><a href="#Web-Application-Proxies" class="headerlink" title="Web Application Proxies"></a>Web Application Proxies</h3><ul>
+<li>Burp proxy</li>
+<li></li>
+</ul>
+]]></content>
     
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://secretwiki.org/2017/05/30/kali-install/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Auooo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="SecretWiki">
-    </span>
-
+    <summary type="html">
     
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">Kali Linux 安装笔记</h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-30T16:14:04+08:00">
-                2017-05-30
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2017-06-17T17:22:49+08:00">
-                2017-06-17
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/工具和环境/" itemprop="url" rel="index">
-                    <span itemprop="name">工具和环境</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/工具和环境/网络安全/" itemprop="url" rel="index">
-                    <span itemprop="name">网络安全</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/工具和环境/网络安全/Kali-Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Kali Linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/05/30/kali-install/" class="leancloud_visitors" data-flag-title="Kali Linux 安装笔记">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  12,248
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  48
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
+      &lt;p&gt;I start to read the book &lt;em&gt;Web Penetration Testing with Kali Linux, Sencond Edition&lt;/em&gt; today, and make some notes on it.&lt;/p&gt;
     
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <p>记录自己在 Kali Linux 安装过程中遇到的问题和解决方案。</p>
+    </summary>
+    
+      <category term="学习笔记" scheme="https://secretwiki.org/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="计算机和互联网" scheme="https://secretwiki.org/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%92%8C%E4%BA%92%E8%81%94%E7%BD%91/"/>
+    
+      <category term="网络安全" scheme="https://secretwiki.org/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%92%8C%E4%BA%92%E8%81%94%E7%BD%91/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
+    
+    
+      <category term="Penetration" scheme="https://secretwiki.org/tags/Penetration/"/>
+    
+      <category term="渗透测试" scheme="https://secretwiki.org/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/"/>
+    
+      <category term="Kali Linux" scheme="https://secretwiki.org/tags/Kali-Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Kali Linux 安装笔记</title>
+    <link href="https://secretwiki.org/2017/05/30/kali-install/"/>
+    <id>https://secretwiki.org/2017/05/30/kali-install/</id>
+    <published>2017-05-30T08:14:04.000Z</published>
+    <updated>2017-06-17T09:22:49.983Z</updated>
+    
+    <content type="html"><![CDATA[<p>记录自己在 Kali Linux 安装过程中遇到的问题和解决方案。</p>
 <a id="more"></a>
 <p>注：本文为近日在物理机安装 Kali Linux 的个人笔记，仅供参考，文中的操作只是基于文中列出的特定机型和 Kali Linux 版本。</p>
 <h1 id="环境说明"><a href="#环境说明" class="headerlink" title="环境说明"></a>环境说明</h1><p>物理机：神舟 K480N 笔记本，双硬盘(光驱位拆了光驱，换成了自带的 500G hdd 硬盘 ,原来的hdd硬位盘换了个 128G 的 ssd），双显卡( Nvidia GT645M + intel hd4000 集显)。</p>
@@ -1200,877 +981,23 @@
 <p>可以在命令行中输入 <code>docker info</code> ，查看其中的 <code>Docker Root Dir</code> 字段的值，以确认修改成功。</p>
 </li>
 </ol>
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Kali-Linux/" rel="tag"># Kali Linux</a>
-          
-        </div>
-      
-
-      
-        
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/06/08/Reading-Notes-Web-Penetration-Testing-with-Kali-Linux-Second-Edition/" rel="prev" title="Reading Notes: Web Penetration Testing with Kali Linux, Second Edition">
-                Reading Notes: Web Penetration Testing with Kali Linux, Second Edition <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-  <div class="comments" id="comments">
+]]></content>
     
-      <div onclick="showGitment()" id="gitment_title" class="gitment_title">显示 Gitment 评论</div>
-      <div id="container" style="display:none"></div>
-      <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
-      <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
-      <script>
-		const myTheme = {
-    	  render(state, instance) {
-      	  	const container = document.createElement('div');
-      	  	container.lang = "en-US";
-      	  	container.className = 'gitment-container gitment-root-container';
-      	  	container.appendChild(instance.renderHeader(state, instance));
-      	  	container.appendChild(instance.renderEditor(state, instance));
-      	  	container.appendChild(instance.renderComments(state, instance));
-      	  	container.appendChild(instance.renderFooter(state, instance));
-      	  	return container;
-    	  }
- 		}	
-
-  		function showGitment() {
-    	  $("#gitment_title").attr("style", "display:none");
-    	  $("#container").attr("style", "").addClass("gitment_container");
-    	  var gitment = new Gitment({
-      		id: window.location.pathname,
-      		theme: myTheme,
-      		owner: 'secretwiki',
-      		repo: 'secretwiki_comments',
-      		oauth: {
-        		client_id: 'ee17d437b2ded4f7c3d7',
-        		client_secret: '53bc77eae666c190ba9b98da98363461bc82b3e3'
-     		 }	
-    	  });
-    	  gitment.render('container');
-  		}
-  	  </script>
+    <summary type="html">
     
-  </div>
-
-
-        </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/uploads/avatar.png"
-               alt="Auooo" />
-          <p class="site-author-name" itemprop="name">Auooo</p>
-           
-              <p class="site-description motion-element" itemprop="description">Pika-Pika</p>
-          
-        </div>
-        <nav class="site-state motion-element">
-
-          
-            <div class="site-state-item site-state-posts">
-              <a href="/archives">
-                <span class="site-state-item-count">4</span>
-                <span class="site-state-item-name">日志</span>
-              </a>
-            </div>
-          
-
-          
-            
-            
-            <div class="site-state-item site-state-categories">
-              <a href="/categories/index.html">
-                <span class="site-state-item-count">11</span>
-                <span class="site-state-item-name">分类</span>
-              </a>
-            </div>
-          
-
-          
-            
-            
-            <div class="site-state-item site-state-tags">
-              <a href="/tags/index.html">
-                <span class="site-state-item-count">6</span>
-                <span class="site-state-item-name">标签</span>
-              </a>
-            </div>
-          
-
-        </nav>
-
-        
-          <div class="feed-link motion-element">
-            <a href="/atom.xml" rel="alternate">
-              <i class="fa fa-rss"></i>
-              RSS
-            </a>
-          </div>
-        
-
-        <div class="links-of-author motion-element">
-          
-        </div>
-
-        
-        
-          <div class="cc-license motion-element" itemprop="license">
-            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
-              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
-            </a>
-          </div>
-        
-
-        
-        
-          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
-            <div class="links-of-blogroll-title">
-              <i class="fa  fa-fw fa-link"></i>
-              友情链接
-            </div>
-            <ul class="links-of-blogroll-list">
-              
-                <li class="links-of-blogroll-item">
-                  <a href="http://wangchuhong.com" title="楚琴兰剑楼" target="_blank">楚琴兰剑楼</a>
-                </li>
-              
-            </ul>
-          </div>
-        
-
-        
-
-
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#环境说明"><span class="nav-number">1.</span> <span class="nav-text">环境说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装步骤"><span class="nav-number">2.</span> <span class="nav-text">安装步骤</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装后的配置–系统篇"><span class="nav-number">3.</span> <span class="nav-text">安装后的配置–系统篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#更新-Kali-Linux-中的软件包"><span class="nav-number">3.1.</span> <span class="nav-text">更新 Kali Linux 中的软件包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更新-Kali-Linux-的内核头文件"><span class="nav-number">3.2.</span> <span class="nav-text">更新 Kali Linux 的内核头文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-Nvidia-显卡驱动"><span class="nav-number">3.3.</span> <span class="nav-text">安装 Nvidia 显卡驱动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#挂载第二块硬盘"><span class="nav-number">3.4.</span> <span class="nav-text">挂载第二块硬盘</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#笔记本触摸板的配置"><span class="nav-number">3.5.</span> <span class="nav-text">笔记本触摸板的配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#add-architecture-i386"><span class="nav-number">3.6.</span> <span class="nav-text">为 64 位系统添加 32 位架构的支持</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改并发限制"><span class="nav-number">3.7.</span> <span class="nav-text">修改并发限制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#（可选）配置网络"><span class="nav-number">3.8.</span> <span class="nav-text">（可选）配置网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置临时-IP-地址"><span class="nav-number">3.8.1.</span> <span class="nav-text">配置临时 IP 地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#持久配置-IP-地址"><span class="nav-number">3.8.2.</span> <span class="nav-text">持久配置 IP 地址</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#install-fonts"><span class="nav-number">3.9.</span> <span class="nav-text">安装字体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#增加非-root-账户"><span class="nav-number">3.10.</span> <span class="nav-text">增加非 root 账户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#快捷键设置"><span class="nav-number">3.11.</span> <span class="nav-text">快捷键设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#电源优化"><span class="nav-number">3.12.</span> <span class="nav-text">电源优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#根据需要开启系统服务"><span class="nav-number">3.13.</span> <span class="nav-text">根据需要开启系统服务</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装后的配置–常用软件篇"><span class="nav-number">4.</span> <span class="nav-text">安装后的配置–常用软件篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装完整版-Kali-Linux"><span class="nav-number">4.1.</span> <span class="nav-text">安装完整版 Kali Linux</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-watchdog"><span class="nav-number">4.2.</span> <span class="nav-text">安装 watchdog</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置中文输入法"><span class="nav-number">4.3.</span> <span class="nav-text">配置中文输入法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#IBUS"><span class="nav-number">4.3.1.</span> <span class="nav-text">IBUS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（推荐）fcitx"><span class="nav-number">4.3.2.</span> <span class="nav-text">（推荐）fcitx</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-Chromium-Chrome-浏览器"><span class="nav-number">4.4.</span> <span class="nav-text">安装 Chromium/Chrome 浏览器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装翻墙软件"><span class="nav-number">4.5.</span> <span class="nav-text">安装翻墙软件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-Shadowsocks-客户端"><span class="nav-number">4.5.1.</span> <span class="nav-text">安装 Shadowsocks 客户端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-Lantern-客户端"><span class="nav-number">4.5.2.</span> <span class="nav-text">安装 Lantern 客户端</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更换-JDK-（多版本-JDK-共存）"><span class="nav-number">4.6.</span> <span class="nav-text">更换 JDK （多版本 JDK 共存）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-IDE"><span class="nav-number">4.7.</span> <span class="nav-text">安装 IDE</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Pycharm"><span class="nav-number">4.7.1.</span> <span class="nav-text">Pycharm</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装文本编辑器"><span class="nav-number">4.8.</span> <span class="nav-text">安装文本编辑器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#小巧的文本编辑器-Notepadqq"><span class="nav-number">4.8.1.</span> <span class="nav-text">小巧的文本编辑器 Notepadqq</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux-平台下的-Office-编辑套件-LibreOffice"><span class="nav-number">4.8.2.</span> <span class="nav-text">Linux 平台下的 Office 编辑套件 LibreOffice</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MarkDown-编辑器-ReText"><span class="nav-number">4.8.3.</span> <span class="nav-text">MarkDown 编辑器 ReText</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装虚拟化软件"><span class="nav-number">4.9.</span> <span class="nav-text">安装虚拟化软件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#VirtualBox"><span class="nav-number">4.9.1.</span> <span class="nav-text">VirtualBox</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#VMWare-WorkStation"><span class="nav-number">4.9.2.</span> <span class="nav-text">VMWare WorkStation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker"><span class="nav-number">4.9.3.</span> <span class="nav-text">Docker</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装多媒体播放器"><span class="nav-number">4.10.</span> <span class="nav-text">安装多媒体播放器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#音乐播放器-DeaDBeeF"><span class="nav-number">4.10.1.</span> <span class="nav-text">音乐播放器 DeaDBeeF</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网易云音乐"><span class="nav-number">4.10.2.</span> <span class="nav-text">网易云音乐</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第三方的网易云音乐播放器-FeelUOwn"><span class="nav-number">4.10.3.</span> <span class="nav-text">第三方的网易云音乐播放器 FeelUOwn</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-QQ"><span class="nav-number">4.11.</span> <span class="nav-text">安装 QQ</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他需要的软件"><span class="nav-number">4.12.</span> <span class="nav-text">其他需要的软件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装后的配置–浏览器篇"><span class="nav-number">5.</span> <span class="nav-text">安装后的配置–浏览器篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Chromium"><span class="nav-number">5.1.</span> <span class="nav-text">Chromium</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-Flash-插件"><span class="nav-number">5.1.1.</span> <span class="nav-text">安装 Flash 插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关闭-GPU-加速"><span class="nav-number">5.1.2.</span> <span class="nav-text">关闭 GPU 加速</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Firefox"><span class="nav-number">5.2.</span> <span class="nav-text">Firefox</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Flash-插件"><span class="nav-number">5.2.1.</span> <span class="nav-text">Flash 插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#渗透测试相关扩展"><span class="nav-number">5.2.2.</span> <span class="nav-text">渗透测试相关扩展</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#FAQ"><span class="nav-number">6.</span> <span class="nav-text">FAQ</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#root-pass-rec"><span class="nav-number">6.1.</span> <span class="nav-text">通过单用户模式找回root密码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chg-dir-lang"><span class="nav-number">6.2.</span> <span class="nav-text">将中文目录改为英文目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#add-kali-src"><span class="nav-number">6.3.</span> <span class="nav-text">添加 kali 官方网络更新源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#restore-nvidia-driver-failure"><span class="nav-number">6.4.</span> <span class="nav-text">修复 Kali Linux 安装 Nvidia 显卡驱动后报错 “something has gone wrong” </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#enable-prime-sync"><span class="nav-number">6.5.</span> <span class="nav-text">启用 PRIME 同步 (PRIME Sync) 来解决屏幕撕裂问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chromium-unblock-third-party-cookies"><span class="nav-number">6.6.</span> <span class="nav-text">Chromium 浏览器只能看见播放框但没有播放内容的解决方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#manage-docker-as-a-non-root-user"><span class="nav-number">6.7.</span> <span class="nav-text">使用非 root 用户管理 Docker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#configure-docker-to-start-on-boot"><span class="nav-number">6.8.</span> <span class="nav-text">配置 Docker 随系统启动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#change-default-image-container-location-docker"><span class="nav-number">6.9.</span> <span class="nav-text">修改 Docker 默认的镜像和容器存储位置</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
-    </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy; 
-  <span itemprop="copyrightYear">2017</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Auooo</span>
-</div>
-
-
-<div class="powered-by">
-  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
-</div>
-
-<div class="theme-info">
-  主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Mist
-  </a>
-</div>
-
-
-        
-<div class="busuanzi-count">
-  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-  
-    <span class="site-uv">
-      本站访客数
-      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
-      人次
-    </span>
-  
-
-  
-    <span class="site-pv">
-      本站总访问量
-      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
-      次
-    </span>
-  
-</div>
-
-
-        
-      </div>
-    </footer>
-
+      &lt;p&gt;记录自己在 Kali Linux 安装过程中遇到的问题和解决方案。&lt;/p&gt;
     
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-          <span id="scrollpercent"><span>0</span>%</span>
-        
-      </div>
+    </summary>
     
-
-  </div>
-
+      <category term="工具和环境" scheme="https://secretwiki.org/categories/%E5%B7%A5%E5%85%B7%E5%92%8C%E7%8E%AF%E5%A2%83/"/>
+    
+      <category term="网络安全" scheme="https://secretwiki.org/categories/%E5%B7%A5%E5%85%B7%E5%92%8C%E7%8E%AF%E5%A2%83/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
+    
+      <category term="Kali Linux" scheme="https://secretwiki.org/categories/%E5%B7%A5%E5%85%B7%E5%92%8C%E7%8E%AF%E5%A2%83/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/Kali-Linux/"/>
+    
+    
+      <category term="Kali Linux" scheme="https://secretwiki.org/tags/Kali-Linux/"/>
+    
+  </entry>
   
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
-
-  
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-  
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-  
-  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-
-  
-
-  <script type="text/javascript">
-    // Popup Window;
-    var isfetched = false;
-    var isXml = true;
-    // Search DB path;
-    var search_path = "search.xml";
-    if (search_path.length === 0) {
-      search_path = "search.xml";
-    } else if (search_path.endsWith("json")) {
-      isXml = false;
-    }
-    var path = "/" + search_path;
-    // monitor main search box;
-
-    var onPopupClose = function (e) {
-      $('.popup').hide();
-      $('#local-search-input').val('');
-      $('.search-result-list').remove();
-      $('#no-result').remove();
-      $(".local-search-pop-overlay").remove();
-      $('body').css('overflow', '');
-    }
-
-    function proceedsearch() {
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
-        .css('overflow', 'hidden');
-      $('.search-popup-overlay').click(onPopupClose);
-      $('.popup').toggle();
-      var $localSearchInput = $('#local-search-input');
-      $localSearchInput.attr("autocapitalize", "none");
-      $localSearchInput.attr("autocorrect", "off");
-      $localSearchInput.focus();
-    }
-
-    // search function;
-    var searchFunc = function(path, search_id, content_id) {
-      'use strict';
-
-      // start loading animation
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
-          '<div id="search-loading-icon">' +
-          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
-          '</div>' +
-          '</div>')
-        .css('overflow', 'hidden');
-      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
-
-      $.ajax({
-        url: path,
-        dataType: isXml ? "xml" : "json",
-        async: true,
-        success: function(res) {
-          // get the contents from search data
-          isfetched = true;
-          $('.popup').detach().appendTo('.header-inner');
-          var datas = isXml ? $("entry", res).map(function() {
-            return {
-              title: $("title", this).text(),
-              content: $("content",this).text(),
-              url: $("url" , this).text()
-            };
-          }).get() : res;
-          var input = document.getElementById(search_id);
-          var resultContent = document.getElementById(content_id);
-          var inputEventFunction = function() {
-            var searchText = input.value.trim().toLowerCase();
-            var keywords = searchText.split(/[\s\-]+/);
-            if (keywords.length > 1) {
-              keywords.push(searchText);
-            }
-            var resultItems = [];
-            if (searchText.length > 0) {
-              // perform local searching
-              datas.forEach(function(data) {
-                var isMatch = false;
-                var hitCount = 0;
-                var searchTextCount = 0;
-                var title = data.title.trim();
-                var titleInLowerCase = title.toLowerCase();
-                var content = data.content.trim().replace(/<[^>]+>/g,"");
-                var contentInLowerCase = content.toLowerCase();
-                var articleUrl = decodeURIComponent(data.url);
-                var indexOfTitle = [];
-                var indexOfContent = [];
-                // only match articles with not empty titles
-                if(title != '') {
-                  keywords.forEach(function(keyword) {
-                    function getIndexByWord(word, text, caseSensitive) {
-                      var wordLen = word.length;
-                      if (wordLen === 0) {
-                        return [];
-                      }
-                      var startPosition = 0, position = [], index = [];
-                      if (!caseSensitive) {
-                        text = text.toLowerCase();
-                        word = word.toLowerCase();
-                      }
-                      while ((position = text.indexOf(word, startPosition)) > -1) {
-                        index.push({position: position, word: word});
-                        startPosition = position + wordLen;
-                      }
-                      return index;
-                    }
-
-                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
-                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
-                  });
-                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
-                    isMatch = true;
-                    hitCount = indexOfTitle.length + indexOfContent.length;
-                  }
-                }
-
-                // show search results
-
-                if (isMatch) {
-                  // sort index by position of keyword
-
-                  [indexOfTitle, indexOfContent].forEach(function (index) {
-                    index.sort(function (itemLeft, itemRight) {
-                      if (itemRight.position !== itemLeft.position) {
-                        return itemRight.position - itemLeft.position;
-                      } else {
-                        return itemLeft.word.length - itemRight.word.length;
-                      }
-                    });
-                  });
-
-                  // merge hits into slices
-
-                  function mergeIntoSlice(text, start, end, index) {
-                    var item = index[index.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    var hits = [];
-                    var searchTextCountInSlice = 0;
-                    while (position + word.length <= end && index.length != 0) {
-                      if (word === searchText) {
-                        searchTextCountInSlice++;
-                      }
-                      hits.push({position: position, length: word.length});
-                      var wordEnd = position + word.length;
-
-                      // move to next position of hit
-
-                      index.pop();
-                      while (index.length != 0) {
-                        item = index[index.length - 1];
-                        position = item.position;
-                        word = item.word;
-                        if (wordEnd > position) {
-                          index.pop();
-                        } else {
-                          break;
-                        }
-                      }
-                    }
-                    searchTextCount += searchTextCountInSlice;
-                    return {
-                      hits: hits,
-                      start: start,
-                      end: end,
-                      searchTextCount: searchTextCountInSlice
-                    };
-                  }
-
-                  var slicesOfTitle = [];
-                  if (indexOfTitle.length != 0) {
-                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
-                  }
-
-                  var slicesOfContent = [];
-                  while (indexOfContent.length != 0) {
-                    var item = indexOfContent[indexOfContent.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    // cut out 100 characters
-                    var start = position - 20;
-                    var end = position + 80;
-                    if(start < 0){
-                      start = 0;
-                    }
-                    if (end < position + word.length) {
-                      end = position + word.length;
-                    }
-                    if(end > content.length){
-                      end = content.length;
-                    }
-                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
-                  }
-
-                  // sort slices in content by search text's count and hits' count
-
-                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
-                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
-                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
-                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
-                      return sliceRight.hits.length - sliceLeft.hits.length;
-                    } else {
-                      return sliceLeft.start - sliceRight.start;
-                    }
-                  });
-
-                  // select top N slices in content
-
-                  var upperBound = parseInt('1');
-                  if (upperBound >= 0) {
-                    slicesOfContent = slicesOfContent.slice(0, upperBound);
-                  }
-
-                  // highlight title and content
-
-                  function highlightKeyword(text, slice) {
-                    var result = '';
-                    var prevEnd = slice.start;
-                    slice.hits.forEach(function (hit) {
-                      result += text.substring(prevEnd, hit.position);
-                      var end = hit.position + hit.length;
-                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
-                      prevEnd = end;
-                    });
-                    result += text.substring(prevEnd, slice.end);
-                    return result;
-                  }
-
-                  var resultItem = '';
-
-                  if (slicesOfTitle.length != 0) {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
-                  } else {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
-                  }
-
-                  slicesOfContent.forEach(function (slice) {
-                    resultItem += "<a href='" + articleUrl + "'>" +
-                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
-                      "...</p>" + "</a>";
-                  });
-
-                  resultItem += "</li>";
-                  resultItems.push({
-                    item: resultItem,
-                    searchTextCount: searchTextCount,
-                    hitCount: hitCount,
-                    id: resultItems.length
-                  });
-                }
-              })
-            };
-            if (keywords.length === 1 && keywords[0] === "") {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
-            } else if (resultItems.length === 0) {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
-            } else {
-              resultItems.sort(function (resultLeft, resultRight) {
-                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
-                  return resultRight.searchTextCount - resultLeft.searchTextCount;
-                } else if (resultLeft.hitCount !== resultRight.hitCount) {
-                  return resultRight.hitCount - resultLeft.hitCount;
-                } else {
-                  return resultRight.id - resultLeft.id;
-                }
-              });
-              var searchResultList = '<ul class=\"search-result-list\">';
-              resultItems.forEach(function (result) {
-                searchResultList += result.item;
-              })
-              searchResultList += "</ul>";
-              resultContent.innerHTML = searchResultList;
-            }
-          }
-
-          if ('auto' === 'auto') {
-            input.addEventListener('input', inputEventFunction);
-          } else {
-            $('.search-icon').click(inputEventFunction);
-            input.addEventListener('keypress', function (event) {
-              if (event.keyCode === 13) {
-                inputEventFunction();
-              }
-            });
-          }
-
-          // remove loading animation
-          $(".local-search-pop-overlay").remove();
-          $('body').css('overflow', '');
-
-          proceedsearch();
-        }
-      });
-    }
-
-    // handle and trigger popup window;
-    $('.popup-trigger').click(function(e) {
-      e.stopPropagation();
-      if (isfetched === false) {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      } else {
-        proceedsearch();
-      };
-    });
-
-    $('.popup-btn-close').click(onPopupClose);
-    $('.popup').click(function(e){
-      e.stopPropagation();
-    });
-    $(document).on('keyup', function (event) {
-      var shouldDismissSearchPopup = event.which === 27 &&
-        $('.search-popup').is(':visible');
-      if (shouldDismissSearchPopup) {
-        onPopupClose();
-      }
-    });
-  </script>
-
-
-
-
-
-  
-
-  
-  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
-  <script>AV.initialize("I66euxHJUQMgUb4Yx4VazTP6-gzGzoHsz", "FMtuaB0EPvpmzwSiLPFaetkk");</script>
-  <script>
-    function showTime(Counter) {
-      var query = new AV.Query(Counter);
-      var entries = [];
-      var $visitors = $(".leancloud_visitors");
-
-      $visitors.each(function () {
-        entries.push( $(this).attr("id").trim() );
-      });
-
-      query.containedIn('url', entries);
-      query.find()
-        .done(function (results) {
-          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
-
-          if (results.length === 0) {
-            $visitors.find(COUNT_CONTAINER_REF).text(0);
-            return;
-          }
-
-          for (var i = 0; i < results.length; i++) {
-            var item = results[i];
-            var url = item.get('url');
-            var time = item.get('time');
-            var element = document.getElementById(url);
-
-            $(element).find(COUNT_CONTAINER_REF).text(time);
-          }
-          for(var i = 0; i < entries.length; i++) {
-            var url = entries[i];
-            var element = document.getElementById(url);
-            var countSpan = $(element).find(COUNT_CONTAINER_REF);
-            if( countSpan.text() == '') {
-              countSpan.text(0);
-            }
-          }
-        })
-        .fail(function (object, error) {
-          console.log("Error: " + error.code + " " + error.message);
-        });
-    }
-
-    function addCount(Counter) {
-      var $visitors = $(".leancloud_visitors");
-      var url = $visitors.attr('id').trim();
-      var title = $visitors.attr('data-flag-title').trim();
-      var query = new AV.Query(Counter);
-
-      query.equalTo("url", url);
-      query.find({
-        success: function(results) {
-          if (results.length > 0) {
-            var counter = results[0];
-            counter.fetchWhenSave(true);
-            counter.increment("time");
-            counter.save(null, {
-              success: function(counter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(counter.get('time'));
-              },
-              error: function(counter, error) {
-                console.log('Failed to save Visitor num, with error message: ' + error.message);
-              }
-            });
-          } else {
-            var newcounter = new Counter();
-            /* Set ACL */
-            var acl = new AV.ACL();
-            acl.setPublicReadAccess(true);
-            acl.setPublicWriteAccess(true);
-            newcounter.setACL(acl);
-            /* End Set ACL */
-            newcounter.set("title", title);
-            newcounter.set("url", url);
-            newcounter.set("time", 1);
-            newcounter.save(null, {
-              success: function(newcounter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
-              },
-              error: function(newcounter, error) {
-                console.log('Failed to create');
-              }
-            });
-          }
-        },
-        error: function(error) {
-          console.log('Error:' + error.code + " " + error.message);
-        }
-      });
-    }
-
-    $(function() {
-      var Counter = AV.Object.extend("Counter");
-      if ($('.leancloud_visitors').length == 1) {
-        addCount(Counter);
-      } else if ($('.post-title-link').length > 1) {
-        showTime(Counter);
-      }
-    });
-  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-
-
-
-  
-
-  
-
-  
-
-  
-
-</body>
-</html>
+</feed>
