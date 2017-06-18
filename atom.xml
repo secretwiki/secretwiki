@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://secretwiki.org/"/>
-  <updated>2017-06-17T09:33:25.927Z</updated>
+  <updated>2017-06-17T16:01:39.907Z</updated>
   <id>https://secretwiki.org/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://secretwiki.org/2017/06/15/Notes-on-Hexo/"/>
     <id>https://secretwiki.org/2017/06/15/Notes-on-Hexo/</id>
     <published>2017-06-15T02:25:19.000Z</published>
-    <updated>2017-06-17T09:33:25.927Z</updated>
+    <updated>2017-06-17T16:01:39.907Z</updated>
     
     <content type="html"><![CDATA[<p>因为工作生活学习等种种方面的问题，差不多快两年没有折腾博客了，<a href="http://auooo.com" target="_blank" rel="external">之前的 wordpress</a> 上放了几篇随手的笔记，但是后来由于种种原因，没有精力进行维护和更新，但是也舍不得关停，每个月续续费而已。在这段时间里面也接触了 markdown 和 hexo，轻量级的页面，轻量级的部署，给我留下了不少印象，于是选用了 hexo 从头开始。花了一个晚上给部署了起来，这里做一简单记录。</p>
 <a id="more"></a>
@@ -60,6 +60,7 @@
 <h1 id="细节配置"><a href="#细节配置" class="headerlink" title="细节配置"></a>细节配置</h1><p>基本功能都正常后，剩下的就是敲敲打打对博客进行完善了，这时候很有必要把博客的整个体系，以及其配置文件拿出来一个个分析一下，毕竟在过程中已经发现像 next 之类的主题有着强大的第三方插件功能了。下面一个个来分析。</p>
 <p>先看站点配置。</p>
 <h2 id="站点图标-favicon"><a href="#站点图标-favicon" class="headerlink" title="站点图标 favicon"></a>站点图标 favicon</h2><p>支持 <code>16×16,32×32,48×48,64×64</code> 的 ico 文件，将 favicon.ico 放至站点的 sources 文件夹下。</p>
+<p>##</p>
 ]]></content>
     
     <summary type="html">
@@ -238,11 +239,11 @@
       <category term="网络安全" scheme="https://secretwiki.org/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%92%8C%E4%BA%92%E8%81%94%E7%BD%91/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
     
     
+      <category term="Kali Linux" scheme="https://secretwiki.org/tags/Kali-Linux/"/>
+    
       <category term="Penetration" scheme="https://secretwiki.org/tags/Penetration/"/>
     
       <category term="渗透测试" scheme="https://secretwiki.org/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/"/>
-    
-      <category term="Kali Linux" scheme="https://secretwiki.org/tags/Kali-Linux/"/>
     
   </entry>
   
